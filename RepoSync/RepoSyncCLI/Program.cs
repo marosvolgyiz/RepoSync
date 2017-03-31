@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommandLine;
+
 
 namespace RepoSync
 {
@@ -10,6 +7,8 @@ namespace RepoSync
     {
         static void Main(string[] args)
         {
+            var options = new CommandLineOptions();
+            var isValid = Parser.Default.ParseArgumentsStrict(args, options);
         }
     }
 }
