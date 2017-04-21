@@ -9,11 +9,13 @@ namespace RepoSync
     /// </summary>
     public interface IRepoSyncProvider
     {
+
+        List<string> RequiredOptions { get; }
         /// <summary>
-        /// The settings for the provider
+        /// The provider-specific settings for the provider
         /// </summary>
-        IRepoSyncProviderSettings Settings { get; set; }
-        
+        Dictionary<string, string> Settings { get; set; }
+
         /// <summary>
         /// The filter whitch is used by ReadPaths() to filter contents
         /// </summary>
@@ -22,16 +24,16 @@ namespace RepoSync
         /// <summary>
         /// Loads a subtree of contents from a repository
         /// </summary>
-        /// <param name="Path">The Repository path</param>
+        /// <param name="path">The Repository path</param>
         /// <returns></returns>
-        Task<Content> LoadAsync(string Path);
-        
+        Task<Content> LoadAsync(string path);
+
         /// <summary>
         /// Read the filtered paths
         /// </summary>
         /// <returns>A list of avaliable paths</returns>
         Task<List<string>> ReadPathsAsync();
-        
+
         /// <summary>
         /// Reads all contents from ReadPaths()
         /// </summary>
@@ -41,9 +43,8 @@ namespace RepoSync
         /// <summary>
         /// Writes a list of contents
         /// </summary>
-        /// <param name="contetns">A list of contents to be written</param>
+        /// <param name="contents">A list of contents to be written</param>
         /// <returns>The result of writing contents</returns>
         Task<List<RepoSyncActionResult>> WriteAsync(List<Content> contents);
-
     }
 }
