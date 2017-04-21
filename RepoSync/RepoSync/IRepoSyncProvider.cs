@@ -43,7 +43,7 @@ namespace RepoSync
         /// </summary>
         /// <param name="contetns">A list of contents to be written</param>
         /// <returns>The result of writing contents</returns>
-        List<RepoSyncActionResult> WriteAsync(List<Content> contetns);
+        Task<List<RepoSyncActionResult>> WriteAsync(List<Content> contents);
 
     }
 }
