@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSystemProvider
+namespace RepoSync.Providers.FileSystemProvider
 {
     public class FileSystemProvider : IRepoSyncProvider
     {
