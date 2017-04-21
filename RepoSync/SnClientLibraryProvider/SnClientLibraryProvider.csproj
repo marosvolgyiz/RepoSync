@@ -7,8 +7,8 @@
     <ProjectGuid>{4F639C41-C33C-41C7-9C51-89DBEDFA9581}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SnClientLibraryProvider</RootNamespace>
-    <AssemblyName>SnClientLibraryProvider</AssemblyName>
+    <RootNamespace>RepoSync.Providers.SnClientLibraryProvider</RootNamespace>
+    <AssemblyName>RepoSync.Providers.SnClientLibraryProvider</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

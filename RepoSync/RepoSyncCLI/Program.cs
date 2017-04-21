@@ -17,6 +17,7 @@ namespace RepoSync.CLI
                 Console.WriteLine(e);
                 throw;
             }
+            
             RepoSyncConfiguration.Current.OverrideWithCliOptions(options);
             Console.ReadLine();
         }

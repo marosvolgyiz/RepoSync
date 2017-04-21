@@ -7,8 +7,8 @@
     <ProjectGuid>{38AABAE9-BEFB-4EE8-A002-48AF77CD78AC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileSystemProvider</RootNamespace>
-    <AssemblyName>FileSystemProvider</AssemblyName>
+    <RootNamespace>RepoSync.Providers.FileSystemProvider</RootNamespace>
+    <AssemblyName>RepoSync.Providers.FileSystemProvider</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

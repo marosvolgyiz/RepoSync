@@ -7,8 +7,8 @@
     <ProjectGuid>{B0F83DF2-4E2D-4D92-A888-463E654BF552}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MemoryProvider</RootNamespace>
-    <AssemblyName>MemoryProvider</AssemblyName>
+    <RootNamespace>RepoSync.Providers.MemoryProvider</RootNamespace>
+    <AssemblyName>RepoSync.Providers.MemoryProvider</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
