@@ -1,6 +1,6 @@
 ﻿using RepoSync;
 
-namespace SnClientLibraryProvider
+namespace RepoSync.Providers.SnClientLibraryProvider
 {
     public class SnClientLibraryProvider : IRepoSyncProvider
     {
