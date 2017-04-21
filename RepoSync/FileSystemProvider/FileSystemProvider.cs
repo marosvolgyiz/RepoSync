@@ -8,7 +8,7 @@ namespace FileSystemProvider
 {
     public class FileSystemProvider : IRepoSyncProvider
     {
-        public List<string> RequiredOptions => new List<string> { "Path" };
+        public List<string> RequiredSettings => new List<string> { "Path" };
         public Dictionary<string, string> Settings { get; set; }
         public IRepoSyncFilter Filter { get; set; }
         public async Task<Content> LoadAsync(string path)

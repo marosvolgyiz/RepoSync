@@ -17,7 +17,7 @@ namespace MemoryProvider
             get; set;
         }
 
-        public List<string> RequiredOptions => new List<string> { };
+        public List<string> RequiredSettings => new List<string> { };
         public Dictionary<string, string> Settings { get; set; }
 
         public async Task<SenseNet.Client.Content> LoadAsync(string path)

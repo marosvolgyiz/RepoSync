@@ -10,7 +10,7 @@ namespace RepoSync
     public interface IRepoSyncProvider
     {
 
-        List<string> RequiredOptions { get; }
+        List<string> RequiredSettings { get; }
         /// <summary>
         /// The provider-specific settings for the provider
         /// </summary>

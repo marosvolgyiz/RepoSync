@@ -7,7 +7,7 @@ namespace SnClientLibraryProvider
 {
     public class SnClientLibraryProvider : IRepoSyncProvider
     {
-        public List<string> RequiredOptions => new List<string> { };
+        public List<string> RequiredSettings => new List<string> { };
         public Dictionary<string, string> Settings { get; set; }
         public IRepoSyncFilter Filter { get; set; }
         public Task<Content> LoadAsync(string path)
