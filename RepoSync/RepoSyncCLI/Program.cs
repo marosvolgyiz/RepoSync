@@ -9,7 +9,15 @@ namespace RepoSync
         public static void Main(string[] args)
         {
             var options = new CommandLineOptions();
-            var isValid = Parser.Default.ParseArgumentsStrict(args, options);
+            try
+            {
+                var isValid = Parser.Default.ParseArguments(args, options);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
             RepoSyncConfiguration.Current.OverrideWithCliOptions(options);
             Console.ReadLine();
         }

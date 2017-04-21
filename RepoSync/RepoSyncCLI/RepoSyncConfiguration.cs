@@ -19,10 +19,12 @@ namespace RepoSync
         public static RepoSyncConfiguration Current => _instance ?? (_instance = new RepoSyncConfiguration());
 
         public string SourceProviderName { get; private set; }
-        public Dictionary<string, string> SourceProviderOptions { get; private set; }
+        public string SourceProviderSettings { get; private set; }
+        public Dictionary<string, string> SourceProviderSettingsDictionary => GetOptionsDictionary(SourceProviderSettings);
 
         public string TargetProviderName { get; private set; }
-        public Dictionary<string, string> TargetProviderOptions { get; private set; }
+        public string TargetProviderSettings { get; private set; }
+        public Dictionary<string, string> TargetProviderSettingsDictionary => GetOptionsDictionary(TargetProviderSettings);
 
         public ActionType ActionType { get; private set; }
 
@@ -53,18 +55,40 @@ namespace RepoSync
             return new Dictionary<string, string>();
         }
 
-        public void OverrideWithCliOptions(CommandLineOptions options)
+        public void OverrideWithCliOptions(CommandLineOptions cliOptions)
         {
-            //ToDo
+            var cliOptionsType = cliOptions.GetType();
+            var cliPropertyInfos = cliOptionsType.GetProperties();
+            var typeInfo = GetType();
+            foreach (var cliPropertyInfo in cliPropertyInfos)
+            {
+                var configPropertyInfo = typeInfo.GetProperty(cliPropertyInfo.Name);
+                if (configPropertyInfo != null)
+                {
+                    var configValue = configPropertyInfo.GetValue(this);
+                    var cliOptionValue = cliPropertyInfo.GetValue(cliOptions);
+                    if (configValue != null
+                        &&
+                        cliOptionValue != null
+                        &&
+                        cliPropertyInfo.PropertyType == configPropertyInfo.PropertyType
+                        &&
+                        configPropertyInfo.CanWrite
+                    )
+                    {
+                        configPropertyInfo.SetValue(this, cliOptionValue);
+                    }
+                }
+            }
         }
 
         private RepoSyncConfiguration()
         {
             SourceProviderName = ConfigurationManager.AppSettings[SourceProviderNameKey];
-            SourceProviderOptions = GetOptionsDictionary(ConfigurationManager.AppSettings[SourceProviderOptionsKey]);
+            SourceProviderSettings = ConfigurationManager.AppSettings[SourceProviderOptionsKey];
 
             TargetProviderName = ConfigurationManager.AppSettings[TargetProviderNameKey];
-            TargetProviderOptions = GetOptionsDictionary(ConfigurationManager.AppSettings[TargetProviderOptionsKey]);
+            TargetProviderSettings = ConfigurationManager.AppSettings[TargetProviderOptionsKey];
 
             ActionType actionType;
             if (Enum.TryParse(ConfigurationManager.AppSettings[ActionTypeKey], true, out actionType))

@@ -12,14 +12,14 @@ namespace RepoSync
 
         [Option("sourceProviderSettings", HelpText = "The provider specific settings for the source provider")]
         public string SourceProviderSettings { get; set; }
-    
-        [Option("targetProviderSettings", HelpText = "The provider specific settings for the target provider")]
-        public string TargetProviderSettings { get; set; }
 
         [Option("targetProvider")]
         public string TargetProviderName { get; set; }
 
+        [Option("targetProviderSettings", HelpText = "The provider specific settings for the target provider")]
+        public string TargetProviderSettings { get; set; }
+
         [Option('a', "ActionType")]
-        public ActionType? ActionType { get; set; }
+        public ActionType ActionType { get; set; }
     }
 }
