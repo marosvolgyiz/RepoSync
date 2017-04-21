@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
 
 namespace RepoSync
 {
-    public class ConfigReader
+    public class RepoSyncConfiguration
     {
-        private const string SourceProviderNameKey = "RepoSync-SourceProviderName";
-        private const string SourceProviderOptionsKey = "RepoSync-SourceProviderName";
+        private const string SourceProviderNameKey = "SourceProviderName";
+        private const string SourceProviderOptionsKey = "SourceProviderName";
 
-        private const string TargetProviderNameKey = "RepoSync-TargetProviderName";
-        private const string TargetProviderOptionsKey = "RepoSync-TargetProviderName";
+        private const string TargetProviderNameKey = "TargetProviderName";
+        private const string TargetProviderOptionsKey = "TargetProviderName";
 
-        private static ConfigReader _instance;
-        public static ConfigReader Current => _instance ?? (_instance = new ConfigReader());
+        private const string ActionTypeKey = "ActionType";
 
-        public string SourceProviderName { get; }
-        public Dictionary<string, string> SourceProviderOptions { get; }
+        private static RepoSyncConfiguration _instance;
+        public static RepoSyncConfiguration Current => _instance ?? (_instance = new RepoSyncConfiguration());
 
-        public string TargetProviderName { get; }
-        public Dictionary<string, string> TargetProviderOptions { get; }
+        public string SourceProviderName { get; private set; }
+        public Dictionary<string, string> SourceProviderOptions { get; private set; }
 
+        public string TargetProviderName { get; private set; }
+        public Dictionary<string, string> TargetProviderOptions { get; private set; }
+
+        public ActionType ActionType { get; private set; }
 
         private static Dictionary<string, string> GetOptionsDictionary(string options)
         {
@@ -51,13 +53,24 @@ namespace RepoSync
             return new Dictionary<string, string>();
         }
 
-        private ConfigReader()
+        public void OverrideWithCliOptions(CommandLineOptions options)
+        {
+            //ToDo
+        }
+
+        private RepoSyncConfiguration()
         {
             SourceProviderName = ConfigurationManager.AppSettings[SourceProviderNameKey];
             SourceProviderOptions = GetOptionsDictionary(ConfigurationManager.AppSettings[SourceProviderOptionsKey]);
 
             TargetProviderName = ConfigurationManager.AppSettings[TargetProviderNameKey];
             TargetProviderOptions = GetOptionsDictionary(ConfigurationManager.AppSettings[TargetProviderOptionsKey]);
+
+            ActionType actionType;
+            if (Enum.TryParse(ConfigurationManager.AppSettings[ActionTypeKey], true, out actionType))
+            {
+                ActionType = actionType;
+            }
         }
     }
 }
