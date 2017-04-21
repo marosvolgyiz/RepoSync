@@ -1,23 +1,24 @@
 ﻿using CommandLine;
-using RepoSync;
 
-namespace RepoSync
+namespace RepoSync.CLI
 {
     public class CommandLineOptions
     {
-        [Option('s', "source", Required = true, HelpText = "The source path")]
-        public string SourcePath { get; set; }
 
-        [Option("sourceProvider", DefaultValue = "SnClientLibraryProvider")]
+
+        [Option("sourceProvider")]
         public string SourceProviderName { get; set; }
 
-        [Option('t', "target", Required = true, HelpText = "The target path")]
-        public string TargetPath { get; set; }
+        [Option("sourceProviderSettings", HelpText = "The provider specific settings for the source provider")]
+        public string SourceProviderSettings { get; set; }
 
-        [Option("targetProvider", DefaultValue = "FileSystemProvider")]
+        [Option("targetProvider")]
         public string TargetProviderName { get; set; }
 
-        [Option('a', "ActionType", DefaultValue = ActionType.Compare)]
+        [Option("targetProviderSettings", HelpText = "The provider specific settings for the target provider")]
+        public string TargetProviderSettings { get; set; }
+
+        [Option('a', "ActionType")]
         public ActionType ActionType { get; set; }
     }
 }
