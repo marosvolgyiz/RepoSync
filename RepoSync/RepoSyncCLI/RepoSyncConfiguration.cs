@@ -8,10 +8,10 @@ namespace RepoSync.CLI
     public class RepoSyncConfiguration
     {
         private const string SourceProviderNameKey = "SourceProviderName";
-        private const string SourceProviderOptionsKey = "SourceProviderName";
+        private const string SourceProviderOptionsKey = "SourceProviderSettings";
 
         private const string TargetProviderNameKey = "TargetProviderName";
-        private const string TargetProviderOptionsKey = "TargetProviderName";
+        private const string TargetProviderOptionsKey = "TargetProviderSettings";
 
         private const string ActionTypeKey = "ActionType";
 

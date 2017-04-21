@@ -11,17 +11,27 @@
         /// <summary>
         /// The source provider instance
         /// </summary>
-        protected readonly TSourceProvider _sourceProvider;
+        private readonly TSourceProvider _sourceProvider;
 
         /// <summary>
         /// The target provider instance
         /// </summary>
-        protected readonly TTargetProvider _targetProvider;
+        private readonly TTargetProvider _targetProvider;
 
         /// <summary>
         /// The type of the action
         /// </summary>
-        protected readonly ActionType _actionType;
+        private readonly ActionType _actionType;
+
+        /// <summary>
+        /// Public endpoint for running a synchronization job.
+        /// </summary>
+        public void Run()
+        {
+            // ToDO: Sync method basics
+            var contets = _sourceProvider.ReadPathsAsync();
+
+        }
 
         /// <summary>
         /// Protected constructor for the Worker Instance
@@ -47,16 +57,6 @@
         /// <param name="actionType">The action type</param>
         public Worker(IRepoSyncProvider sourceProvider, IRepoSyncProvider targetProvider, ActionType actionType) : base(sourceProvider, targetProvider, actionType)
         {
-        }
-
-        /// <summary>
-        /// Public endpoint for running a synchronization job.
-        /// </summary>
-        public void Run()
-        {
-            // ToDO: Sync method basics
-            var contets = _sourceProvider.ReadPathsAsync();
-
         }
     }
 }
