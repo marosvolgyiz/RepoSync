@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using CommandLine;
+using RepoSync.Providers.MemoryProvider;
+using RepoSync;
+using RepoSync.Providers.FileSystemProvider;
 
 namespace RepoSync.CLI
 {
@@ -20,6 +24,10 @@ namespace RepoSync.CLI
             
             RepoSyncConfiguration.Current.OverrideWithCliOptions(options);
             Console.ReadLine();
+            MemoryProvider source = new MemoryProvider();
+            MemoryProvider target = new MemoryProvider();
+
+            var a = new Worker(source, target, ActionType.Compare);
         }
     }
 }
