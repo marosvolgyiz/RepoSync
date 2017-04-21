@@ -11,22 +11,22 @@ namespace FileSystemProvider
         public List<string> RequiredOptions => new List<string> { "Path" };
         public Dictionary<string, string> Settings { get; set; }
         public IRepoSyncFilter Filter { get; set; }
-        public Task<Content> LoadAsync(string path)
+        public async Task<Content> LoadAsync(string path)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<string>> ReadPathsAsync()
+        public async Task<List<string>> ReadPathsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Content>> ReadAsync()
+        public async Task<List<Content>> ReadAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<RepoSyncActionResult>> WriteAsync(List<Content> contents)
+        public async Task<List<RepoSyncActionResult>> WriteAsync(List<Content> contents)
         {
             throw new NotImplementedException();
         }
