@@ -1,7 +1,6 @@
-﻿using System.Configuration;
-using CommandLine;
+﻿using CommandLine;
 
-namespace RepoSync
+namespace RepoSync.CLI
 {
     public class CommandLineOptions
     {

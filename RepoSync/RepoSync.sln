@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoSyncCLI", "RepoSyncCLI\RepoSyncCLI.csproj", "{36ABF7FA-E865-4891-83A6-5E7DFF3E692B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoSync.CLI", "RepoSyncCLI\RepoSync.CLI.csproj", "{36ABF7FA-E865-4891-83A6-5E7DFF3E692B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoSync", "RepoSync\RepoSync.csproj", "{AA5D6AFD-B129-4B59-92BF-2BD1082430EA}"
 EndProject

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 
-namespace RepoSync
+namespace RepoSync.CLI
 {
     public class RepoSyncConfiguration
     {

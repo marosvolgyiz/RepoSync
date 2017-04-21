@@ -1,8 +1,7 @@
 ﻿using System;
 using CommandLine;
 
-
-namespace RepoSync
+namespace RepoSync.CLI
 {
     static class Program
     {
