@@ -66,10 +66,6 @@
       <Project>{38aabae9-befb-4ee8-a002-48af77cd78ac}</Project>
       <Name>FileSystemProvider</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MemoryProvider\MemoryProvider.csproj">
-      <Project>{b0f83df2-4e2d-4d92-a888-463e654bf552}</Project>
-      <Name>MemoryProvider</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RepoSync\RepoSync.csproj">
       <Project>{AA5D6AFD-B129-4B59-92BF-2BD1082430EA}</Project>
       <Name>RepoSync</Name>
