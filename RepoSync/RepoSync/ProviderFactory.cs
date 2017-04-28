@@ -18,11 +18,12 @@ namespace RepoSync
         /// <returns>The created provider instance. </returns>
         public static IRepoSyncProvider Create(string providerName, Dictionary<string, string> settings)
         {
-            Assembly.Load($"RepoSync.Providers.{providerName}");
+            if (AppDomain.CurrentDomain.GetAssemblies().All(a => a.GetName().Name != providerName))
+                Assembly.Load(providerName);
 
             var providerType = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes()).Single(t =>
-                    t.Name == providerName
+                    t.Assembly.GetName().Name == providerName
                     &&
                     t.GetInterfaces().Contains(typeof(IRepoSyncProvider))
                 );
