@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CommandLine;
 using RepoSync.Providers.MemoryProvider;
 
@@ -19,7 +20,8 @@ namespace RepoSync.CLI
             var target = ProviderFactory.Create(config.TargetProviderName, config.TargetProviderSettingsDictionary);
 
             var a = new Worker(source, target, ActionType.Compare);
-            a.Run();
+
+            Task.WaitAll(a.Run());
 
             Console.ReadLine();
         }

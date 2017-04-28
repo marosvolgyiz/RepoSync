@@ -1,4 +1,9 @@
-﻿namespace RepoSync
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using SenseNet.Client;
+
+namespace RepoSync
 {
     /// <summary>
     /// Generic instance of a Sync Worker
@@ -26,10 +31,42 @@
         /// <summary>
         /// Public endpoint for running a synchronization job.
         /// </summary>
-        public void Run()
+        public async Task Run()
         {
-            // ToDO: Sync method basics
-            var contets = _sourceProvider.ReadPathsAsync();
+            await _sourceProvider.ReadPathsAsync();
+            var contents = await _sourceProvider.ReadAsync();
+
+            if (_actionType == ActionType.Compare)
+            {
+                await RunCompare(contents);
+            }
+            else
+            {
+                await RunSync(contents);
+            }
+
+        }
+
+        private async Task<List<(Content source, Content target)>> RunCompare(List<Content> sourceContents)
+        {
+            var diff = new List<(Content source, Content target)>();
+            
+            //ToDo: Improve this, figure out how can be parallelized
+            foreach (var sourceContent in sourceContents)
+            {
+                var targetContent = await _targetProvider.LoadAsync(sourceContent.Path);
+                if (JsonConvert.SerializeObject(sourceContent) != JsonConvert.SerializeObject(targetContent))
+                {
+                    diff.Add((sourceContent, targetContent));
+                }
+            }
+
+            return diff;
+        }
+
+        private async Task RunSync(List<Content> contents)
+        {
+            //ToDo
 
         }
 
