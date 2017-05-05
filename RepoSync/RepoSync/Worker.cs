@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SenseNet.Client;
@@ -31,23 +32,23 @@ namespace RepoSync
         /// <summary>
         /// Public endpoint for running a synchronization job.
         /// </summary>
-        public async Task Run()
+        public async Task<IEnumerable<RepoSyncResult>> Run()
         {
             await _sourceProvider.ReadPathsAsync();
             var contents = await _sourceProvider.ReadAsync();
 
             if (_actionType == ActionType.Compare)
             {
-                await RunCompare(contents);
+                return await RunCompare(contents);
             }
             else
             {
-                await RunSync(contents);
+                return await RunSync(contents);
             }
 
         }
 
-        private async Task<List<(Content source, Content target)>> RunCompare(List<Content> sourceContents)
+        private async Task<IEnumerable<RepoSyncCompareResult>> RunCompare(List<Content> sourceContents)
         {
             var diff = new List<(Content source, Content target)>();
             
@@ -61,12 +62,17 @@ namespace RepoSync
                 }
             }
 
-            return diff;
+            return diff.Select(d=> new RepoSyncCompareResult
+            {
+                // IsDifferent = d.source == d.target,
+                SourceContent = d.source,
+                TargetContent = d.target
+            });
         }
 
-        private async Task RunSync(List<Content> contents)
+        private async Task<IEnumerable<RepoSyncActionResult>> RunSync(List<Content> contents)
         {
-            //ToDo
+            return new List<RepoSyncActionResult>();
 
         }
 

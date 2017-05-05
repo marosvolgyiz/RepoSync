@@ -66,6 +66,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProviderFactory.cs" />
     <Compile Include="RepoSyncActionResult.cs" />
+    <Compile Include="RepoSyncCompareResult.cs" />
+    <Compile Include="RepoSyncResult.cs" />
     <Compile Include="Worker.cs" />
   </ItemGroup>
   <ItemGroup>

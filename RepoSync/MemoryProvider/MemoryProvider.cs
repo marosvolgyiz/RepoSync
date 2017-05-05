@@ -42,7 +42,7 @@ namespace RepoSync.Providers.MemoryProvider
             foreach (var item in contents)
             {
                 this.AddContent(item);
-                result.Add(new RepoSyncActionResult() { ContentResult = item, SourceContent = item, Success = true });
+                result.Add(new RepoSyncActionResult() { ContentResult = item, SourceContent = item });
             }
             return result;
         }
