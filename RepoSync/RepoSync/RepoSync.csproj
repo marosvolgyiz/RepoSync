@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\IContentConverter.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IRepoSyncFilter.cs" />
     <Compile Include="IRepoSyncProvider.cs" />
