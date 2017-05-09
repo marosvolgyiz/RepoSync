@@ -53,8 +53,28 @@ namespace RepoSync.Providers.FileSystemProvider
             foreach (var item in allfiles)
             {
                 var fi = new FileInfo(item);
-                Content c =  Content.Create(0);
+                string sncExtension = ".snc";
+                if (fi.FullName.EndsWith(sncExtension))
+                {
+                    //TODO: Find binary 
+                    var binaryFi = new FileInfo(fi.FullName.Substring(0, fi.FullName.Length - sncExtension.Length));
+                    if (binaryFi == null)
+                    {
+                        //Content does not have binary
+
+                    }
+                    else
+                    {
+                        //Content does have binary
+
+                    }
+                    //TODO: check the contents contains this item before add to contents list
                 
+                }
+                else
+                {
+
+                }
                 //TODO: Read .snc
                 //TODO: Create Content object
                 //TODO: Fill all fields
