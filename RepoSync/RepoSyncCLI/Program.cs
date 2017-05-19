@@ -1,6 +1,6 @@
 ﻿using System;
 using CommandLine;
-using RepoSync.Providers.MemoryProvider;
+
 
 namespace RepoSync.CLI
 {
@@ -20,7 +20,7 @@ namespace RepoSync.CLI
 
             var a = new Worker(source, target, ActionType.Compare);
             a.Run();
-
+            
             Console.ReadLine();
         }
     }
