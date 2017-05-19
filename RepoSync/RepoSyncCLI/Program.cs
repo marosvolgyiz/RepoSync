@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CommandLine;
+using RepoSync.Providers.MemoryProvider;
 
 namespace RepoSync.CLI
 {
