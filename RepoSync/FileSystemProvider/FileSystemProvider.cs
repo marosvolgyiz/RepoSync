@@ -60,16 +60,15 @@ namespace RepoSync.Providers.FileSystemProvider
                     var binaryFi = new FileInfo(fi.FullName.Substring(0, fi.FullName.Length - sncExtension.Length));
                     if (binaryFi == null)
                     {
-                        //Content does not have binary
-
+                        //TODO:Content does not have binary
                     }
                     else
                     {
-                        //Content does have binary
+                        //TODO:Content does have binary
 
                     }
                     //TODO: check the contents contains this item before add to contents list
-                
+
                 }
                 else
                 {
