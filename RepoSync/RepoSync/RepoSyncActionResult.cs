@@ -1,6 +1,6 @@
 ﻿using SenseNet.Client;
 using System;
-
+using RepoSync.ContentExtensions;
 namespace RepoSync
 {
     /// <summary>

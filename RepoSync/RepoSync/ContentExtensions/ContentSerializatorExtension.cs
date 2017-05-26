@@ -10,6 +10,10 @@ namespace RepoSync.ContentExtensions
 {
     public static class ContentSerializatorExtension
     {
+        public static SyncContent Content2SyncContent(this Content c)
+        {
+            return c.Content2JSON().JSON2Content();
+        }
         /// <summary>
         /// This method create a json string from SyncContent
         /// </summary>
@@ -42,6 +46,9 @@ namespace RepoSync.ContentExtensions
                 }
             }
             //TODO: Set Permissions
+            resultContent.Path = c.Path;
+            resultContent.Name = c.Name;
+            resultContent.Id = c.Id;
             return resultContent.Content2JSON();
         }
         /// <summary>
