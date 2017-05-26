@@ -1,6 +1,4 @@
-﻿using SenseNet.Client;
-
-namespace RepoSync
+﻿namespace RepoSync
 {
     public class RepoSyncCompareResult : RepoSyncResult
     {

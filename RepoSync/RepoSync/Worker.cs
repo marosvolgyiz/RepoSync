@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using RepoSync.ContentExtensions;
-using SenseNet.Client;
 
 namespace RepoSync
 {
@@ -32,6 +30,16 @@ namespace RepoSync
         private readonly ActionType _actionType;
 
         /// <summary>
+        /// The list of fields to compare / sync
+        /// </summary>
+        public readonly ReadOnlyCollection<string> FieldList;
+
+        /// <summary>
+        /// The behavior of the specified fields
+        /// </summary>
+        public readonly FieldNameBehavior FieldNameBehavior;
+
+        /// <summary>
         /// Public endpoint for running a synchronization job.
         /// </summary>
         public async Task<IEnumerable<RepoSyncResult>> Run()
@@ -50,7 +58,7 @@ namespace RepoSync
 
         }
 
-        private async Task<IEnumerable<RepoSyncCompareResult>> RunCompare(List<Content> sourceContents)
+        private async Task<IEnumerable<RepoSyncCompareResult>> RunCompare(List<SyncContent> sourceContents)
         {
             var diff = new List<RepoSyncCompareResult>();
             
@@ -61,7 +69,7 @@ namespace RepoSync
 
                 diff.Add(new RepoSyncCompareResult
                 {
-                    IsDifferent = !sourceContent.EqualsWithoutIds(targetContent),
+                    IsDifferent = !sourceContent.CompareTo(targetContent, FieldList?.ToList(), FieldNameBehavior),
                     SourceContent = sourceContent,
                     TargetContent = targetContent
                 });
@@ -69,7 +77,7 @@ namespace RepoSync
             return diff;
         }
 
-        private async Task<IEnumerable<RepoSyncActionResult>> RunSync(List<Content> contents)
+        private async Task<IEnumerable<RepoSyncActionResult>> RunSync(List<SyncContent> contents)
         {
             return await _targetProvider.WriteAsync(contents);
         }
@@ -80,11 +88,15 @@ namespace RepoSync
         /// <param name="sourceProvider">The source provider instance</param>
         /// <param name="targetProvider">The target provider instance</param>
         /// <param name="actionType">The action type</param>
-        protected Worker(TSourceProvider sourceProvider, TTargetProvider targetProvider, ActionType actionType)
+        /// <param name="fieldNameBehavior">The behavior for the specified field name list</param>
+        /// <param name="fieldList">A list of fields that will act as specified in the behavior property</param>
+        protected Worker(TSourceProvider sourceProvider, TTargetProvider targetProvider, ActionType actionType, FieldNameBehavior fieldNameBehavior = FieldNameBehavior.Blacklist, IEnumerable<string> fieldList = null)
         {
             _sourceProvider = sourceProvider;
             _targetProvider = targetProvider;
             _actionType = actionType;
+            FieldNameBehavior = fieldNameBehavior;
+            FieldList = fieldList?.ToList().AsReadOnly();
         }
     }
 
@@ -96,7 +108,9 @@ namespace RepoSync
         /// <param name="sourceProvider">The source provider instance</param>
         /// <param name="targetProvider">The target provider instance</param>
         /// <param name="actionType">The action type</param>
-        public Worker(IRepoSyncProvider sourceProvider, IRepoSyncProvider targetProvider, ActionType actionType) : base(sourceProvider, targetProvider, actionType)
+        /// <param name="fieldNameBehavior">The behavior for the specified field name list</param>
+        /// <param name="fieldList">A list of fields that will act as specified in the behavior property</param>
+        public Worker(IRepoSyncProvider sourceProvider, IRepoSyncProvider targetProvider, ActionType actionType, FieldNameBehavior fieldNameBehavior = FieldNameBehavior.Blacklist, IEnumerable<string> fieldList = null) : base(sourceProvider, targetProvider, actionType)
         {
         }
     }

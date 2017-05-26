@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepoSync.ContentExtensions;
@@ -14,11 +11,23 @@ namespace RepoSync.Tests
     {
 
         [TestMethod]
-        public async Task TestSerializeBasic()
+        public async Task TestSerializeFromSnContent()
         {
             var c1 = Content.CreateNew<Content>("Root", "Task", "TestTask", server: new ServerContext());
             var json = c1.Content2JSON();
-            Assert.AreEqual(json, "{\"Fields\":{\"Path\":null,\"Name\":\"TestTask\",\"Id\":0},\"Permissions\":{}}");
+            Assert.AreEqual(json, "{\"Id\":0,\"Name\":\"TestTask\",\"Path\":null,\"Fields\":{\"Path\":null,\"Name\":\"TestTask\",\"Id\":0},\"Permissions\":{}}");
+        }
+
+        [TestMethod]
+        public async Task TestSerializeFromSyncContent()
+        {
+            var c1 = new SyncContent()
+            {
+                Path="Root/Example",
+                Name="TestContentName"
+            };
+            var json = c1.Content2JSON();
+            Assert.AreEqual(json, "{\"Id\":0,\"Name\":\"TestContentName\",\"Path\":\"Root/Example\",\"Fields\":{\"Path\":\"Root/Example\",\"Name\":\"TestContentName\",\"Id\":0},\"Permissions\":{}}");
         }
 
         [TestMethod]

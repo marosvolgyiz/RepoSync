@@ -1,6 +1,4 @@
-﻿using SenseNet.Client;
-using System;
-using RepoSync.ContentExtensions;
+﻿using RepoSync.ContentExtensions;
 namespace RepoSync
 {
     /// <summary>
@@ -11,6 +9,6 @@ namespace RepoSync
         /// <summary>
         /// The content that has been returned after a write
         /// </summary>
-        public Content ContentResult { get; set; }
+        public SyncContent ContentResult { get; set; }
     }
 }

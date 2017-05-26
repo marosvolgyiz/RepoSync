@@ -1,26 +1,49 @@
-﻿using System;
-using SenseNet.Client;
+﻿using System.Collections.Generic;
 
 namespace RepoSync.ContentExtensions
 {
+    public enum FieldNameBehavior
+    {
+        Whitelist,
+        Blacklist
+    }
+
     public static class ContentComparerExtension
     {
-        public static bool EqualsWithoutIds(this Content source, Content target)
+        public static bool CompareTo(this SyncContent source,
+            SyncContent target,
+            List<string> fieldNames = null,
+            FieldNameBehavior fieldNameBehavior = FieldNameBehavior.Blacklist)
         {
+            if (fieldNames == null)
+            {
+                fieldNames = new List<string> { "Id", "ParentId" };
+            }
+
             if (target == null)
             {
                 return false;
             }
 
             var cloned = target.Content2JSON().JSON2Content();
-            if (cloned.Fields["Id"] != null && (long)cloned.Fields["Id"] != source.Id)
+
+            if (fieldNameBehavior == FieldNameBehavior.Blacklist)
             {
-                cloned.Fields["Id"] = source.Id;
+                foreach (var currentField in source.Fields)
+                {
+                    if (!fieldNames.Contains(currentField.Key) && currentField.Value != target.Fields[currentField.Key])
+                        return false;
+                }
+                return true;
             }
 
-            if (cloned.Fields["ParentId"] != null && (long)cloned.Fields["ParentId"] != source.ParentId)
+            foreach (var currentFieldName in fieldNames)
             {
-                cloned.Fields["ParentId"] = source.ParentId;
+                if (source.Fields[currentFieldName] != target.Fields[currentFieldName])
+                {
+                    return false;
+                }
+                return true;
             }
 
             return source.Content2JSON() == cloned.Content2JSON();

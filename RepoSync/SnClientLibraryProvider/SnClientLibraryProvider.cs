@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using RepoSync;
-using SenseNet.Client;
 using RepoSync.ContentExtensions;
 using System;
 
