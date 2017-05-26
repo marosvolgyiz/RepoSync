@@ -5,11 +5,21 @@ using System.Threading.Tasks;
 using SenseNet.Client;
 using System.IO;
 using System.Linq;
+using RepoSync.ContentExtensions;
+using RepoSync.Providers.FileSystemProvider.Helpers;
 
 namespace RepoSync.Providers.FileSystemProvider
 {
     public class FileSystemProvider : IRepoSyncProvider
     {
+        public FileSystemProvider()
+        {
+            if(Settings == null)
+            {
+                Settings = new Dictionary<string, string>();
+            }
+        }
+        public const string sncExtension = ".snc";
         public List<string> RequiredSettings => new List<string> { "Path" };
         public Dictionary<string, string> Settings { get; set; }
         public IRepoSyncFilter Filter { get; set; }
@@ -27,7 +37,7 @@ namespace RepoSync.Providers.FileSystemProvider
                 return _files;
             }
         }
-        public async Task<Content> LoadAsync(string path)
+        public async Task<SyncContent> LoadAsync(string path)
         {
             throw new NotImplementedException();
         }
@@ -46,45 +56,74 @@ namespace RepoSync.Providers.FileSystemProvider
             return Files.Select(f=>f.FullName).ToList();
         }
 
-        public async Task<List<Content>> ReadAsync()
+        public async Task<List<SyncContent>> ReadAsync()
         {
-            List<Content> contents = new List<Content>();
+            List<SyncContent> contents = new List<SyncContent>();
             List<string> allfiles = await ReadPathsAsync();
             foreach (var item in allfiles)
             {
                 var fi = new FileInfo(item);
-                string sncExtension = ".snc";
+               
+                //Read .snc
+                string sncText = string.Empty;
+                string Name = fi.Name;
                 if (fi.FullName.EndsWith(sncExtension))
                 {
-                    //TODO: Find binary 
+                    //Find binary 
+                    Name = fi.Name.Substring(fi.Name.Length - sncExtension.Length);
                     var binaryFi = new FileInfo(fi.FullName.Substring(0, fi.FullName.Length - sncExtension.Length));
+                    
                     if (binaryFi == null)
                     {
-                        //Content does not have binary
-
+                        //TODO:Content does not have binary
                     }
                     else
                     {
-                        //Content does have binary
-
+                        //TODO:Content does have binary
                     }
-                    //TODO: check the contents contains this item before add to contents list
-                
+                    sncText = File.ReadAllText(fi.FullName);
                 }
                 else
                 {
-
+                    //Only binary found, the snc is not found
+                    //TODO: Create a content with name of the file
+                    
+                    //TODO: Set Binary
                 }
-                //TODO: Read .snc
-                //TODO: Create Content object
-                //TODO: Fill all fields
+                
+                //Create Content object
+                var contentObject = sncText.JSON2Content();
+                //TODO: Set Path
+                string Path = "/" + fi.FullName.Replace(Settings["Path"],"").Replace('\\', '/');
+                if (Path.EndsWith(sncExtension))
+                {
+                    Path = Path.Substring(0, Path.Length - sncExtension.Length);
+                }
+                contentObject.Path = Path;
+                contentObject.Name = Name;
+                contents.Add(contentObject);
             }
             return contents;
         }
 
-        public async Task<List<RepoSyncActionResult>> WriteAsync(List<Content> contents)
+        public async Task<List<RepoSyncActionResult>> WriteAsync(List<SyncContent> contents)
         {
-            throw new NotImplementedException();
+            List<RepoSyncActionResult> result = new List<RepoSyncActionResult>();
+            foreach(var content in contents)
+            {
+                try
+                {
+                    //Create folders recursively 
+                    IOHelpers.CreateInnerFolders(new DirectoryInfo(Settings["Path"]), content.Path);
+                    File.WriteAllText(Settings["Path"] + content.Path.Replace("/",@"\") + ".snc", content.Content2JSON());
+                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = null, Success = true });
+                }
+                catch(Exception ex)
+                {
+                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = ex, Success = false });
+                }
+            }
+            return result;
         }
     }
 }
