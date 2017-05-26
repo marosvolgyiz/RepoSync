@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentExtensions\ContentComparerExtension.cs" />
     <Compile Include="ContentExtensions\ContentSerializatorExtension.cs" />
     <Compile Include="ContentExtensions\SyncContent.cs" />
     <Compile Include="Converters\IContentConverter.cs" />

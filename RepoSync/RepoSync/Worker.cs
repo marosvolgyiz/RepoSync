@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using RepoSync.ContentExtensions;
 using SenseNet.Client;
 
 namespace RepoSync
@@ -50,30 +52,26 @@ namespace RepoSync
 
         private async Task<IEnumerable<RepoSyncCompareResult>> RunCompare(List<Content> sourceContents)
         {
-            var diff = new List<(Content source, Content target)>();
+            var diff = new List<RepoSyncCompareResult>();
             
-            //ToDo: Improve this, figure out how can be parallelized
+            //ToDo: Improve this, figure out if can be parallelized
             foreach (var sourceContent in sourceContents)
             {
                 var targetContent = await _targetProvider.LoadAsync(sourceContent.Path);
-                if (JsonConvert.SerializeObject(sourceContent) != JsonConvert.SerializeObject(targetContent))
-                {
-                    diff.Add((sourceContent, targetContent));
-                }
-            }
 
-            return diff.Select(d=> new RepoSyncCompareResult
-            {
-                // IsDifferent = d.source == d.target,
-                SourceContent = d.source,
-                TargetContent = d.target
-            });
+                diff.Add(new RepoSyncCompareResult
+                {
+                    IsDifferent = !sourceContent.EqualsWithoutIds(targetContent),
+                    SourceContent = sourceContent,
+                    TargetContent = targetContent
+                });
+            }
+            return diff;
         }
 
         private async Task<IEnumerable<RepoSyncActionResult>> RunSync(List<Content> contents)
         {
-            return new List<RepoSyncActionResult>();
-
+            return await _targetProvider.WriteAsync(contents);
         }
 
         /// <summary>

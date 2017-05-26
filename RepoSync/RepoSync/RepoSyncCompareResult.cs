@@ -7,6 +7,6 @@ namespace RepoSync
         /// <summary>
         /// Indicates if the action has succeeded
         /// </summary>
-        public bool IsDifferent => SourceContent == TargetContent;
+        public bool IsDifferent { get; set; }
     }
 }
