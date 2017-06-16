@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{38AABAE9-BEFB-4EE8-A002-48AF77CD78AC}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{F7494D63-32BC-4AA4-B000-87AE5C2AA0E9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RepoSync.Providers.FileSystemProvider</RootNamespace>
-    <AssemblyName>RepoSync.Providers.FileSystemProvider</AssemblyName>
+    <RootNamespace>FileSystemProviderTest</RootNamespace>
+    <AssemblyName>FileSystemProviderTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -38,11 +41,12 @@
       <HintPath>..\packages\SenseNet.Client.1.1.0.0\lib\net45\SenseNet.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SenseNet.Tools, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SenseNet.Tools.2.1.1\lib\net451\SenseNet.Tools.dll</HintPath>
+    <Reference Include="SenseNet.Tools, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SenseNet.Tools.2.1.0.0\lib\net45\SenseNet.Tools.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,19 +56,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileSystemProvider.cs" />
-    <Compile Include="Helpers\IOHelpers.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RepoSync\RepoSync.csproj">
-      <Project>{AA5D6AFD-B129-4B59-92BF-2BD1082430EA}</Project>
-      <Name>RepoSync</Name>
-    </ProjectReference>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <ProjectReference Include="..\FileSystemProvider\FileSystemProvider.csproj">
+      <Project>{38aabae9-befb-4ee8-a002-48af77cd78ac}</Project>
+      <Name>FileSystemProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepoSync\RepoSync.csproj">
+      <Project>{aa5d6afd-b129-4b59-92bf-2bd1082430ea}</Project>
+      <Name>RepoSync</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

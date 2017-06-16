@@ -1,6 +1,7 @@
 ﻿using System;
 using CommandLine;
 
+
 namespace RepoSync.CLI
 {
     static class Program
@@ -8,17 +9,18 @@ namespace RepoSync.CLI
         public static void Main(string[] args)
         {
             var options = new CommandLineOptions();
-            try
-            {
-                var isValid = Parser.Default.ParseArguments(args, options);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            var config = RepoSyncConfiguration.Current;
+
+            Parser.Default.ParseArguments(args, options);
             
-            RepoSyncConfiguration.Current.OverrideWithCliOptions(options);
+            config.OverrideWithCliOptions(options);
+
+            var source = ProviderFactory.Create(config.SourceProviderName, config.SourceProviderSettingsDictionary);
+            var target = ProviderFactory.Create(config.TargetProviderName, config.TargetProviderSettingsDictionary);
+
+            var a = new Worker(source, target, ActionType.Compare);
+            a.Run();
+            
             Console.ReadLine();
         }
     }

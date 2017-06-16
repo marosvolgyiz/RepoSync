@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using RepoSync;
 using SenseNet.Client;
+using RepoSync.ContentExtensions;
+using System;
 
 namespace RepoSync.Providers.SnClientLibraryProvider
 {
@@ -10,7 +12,7 @@ namespace RepoSync.Providers.SnClientLibraryProvider
         public List<string> RequiredSettings => new List<string> { };
         public Dictionary<string, string> Settings { get; set; }
         public IRepoSyncFilter Filter { get; set; }
-        public Task<Content> LoadAsync(string path)
+        public Task<SyncContent> LoadAsync(string path)
         {
             throw new System.NotImplementedException();
         }
@@ -20,14 +22,14 @@ namespace RepoSync.Providers.SnClientLibraryProvider
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Content>> ReadAsync()
+        public Task<List<SyncContent>> ReadAsync()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<List<RepoSyncActionResult>> WriteAsync(List<Content> contents)
+        public Task<List<RepoSyncActionResult>> WriteAsync(List<SyncContent> contents)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
