@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ReposSyncWPFApp
+namespace RepoSync.WPFApp
 {
     /// <summary>
     /// Interaction logic for Settings.xaml

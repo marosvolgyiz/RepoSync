@@ -1,9 +1,9 @@
-﻿<Application x:Class="ReposSyncWPFApp.App"
+﻿<Application x:Class=" RepoSync.WPFApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ReposSyncWPFApp"
+             xmlns:local="clr-namespace:RepoSync.WPFApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="FontAwesome">/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
     </Application.Resources>
 </Application>

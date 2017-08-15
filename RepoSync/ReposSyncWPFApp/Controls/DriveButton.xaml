@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="RepoSync.WPFApp.Controls.DriveButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RepoSync.WPFApp.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="64" Cursor="Hand" d:DesignWidth="200" Padding="5,3,5,3" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" BorderThickness="1" BorderBrush="Transparent">
+    <Grid>
+       
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+        <Ellipse  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Opacity="0.5" Width="1"  Margin="0" StrokeThickness="0">
+            <Ellipse.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop/>
+                    <GradientStop Color="#00AEAEAE" Offset="1"/>
+                    <GradientStop Color="#FF8D8D8D" Offset="0.52"/>
+                </LinearGradientBrush>
+            </Ellipse.Fill>
+
+        </Ellipse>
+        <TextBlock  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="tbFontAwesome" Text="&#xf2db;" FontFamily="{StaticResource FontAwesome}" Foreground="#6C7A89" FontSize="26" Margin="10" VerticalAlignment="Center">
+            <!--<TextBlock.BitmapEffect>
+                <DropShadowBitmapEffect ShadowDepth=".2" Softness=".04" Color="Gray">
+                </DropShadowBitmapEffect>
+            </TextBlock.BitmapEffect>-->
+        </TextBlock>
+        <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="DriveCaption" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16">
+            <!--<Label.BitmapEffect>
+                <DropShadowBitmapEffect ShadowDepth=".2" Softness=".04" Color="Gray">
+                </DropShadowBitmapEffect>
+            </Label.BitmapEffect>-->
+            Mem Drive
+        </Label>
+        <Label  Grid.Row="1" Grid.Column="2" Name="StatusLabel"  VerticalContentAlignment="Top" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Foreground="#D91E18" FontSize="12" FontFamily="Courier New" Grid.ColumnSpan="2">
+            <!--<Label.BitmapEffect>
+                <DropShadowBitmapEffect  ShadowDepth=".2" Softness=".04" Color="Gray">
+                </DropShadowBitmapEffect>
+            </Label.BitmapEffect>-->
+            Disconnected
+        </Label>
+    </Grid>
+</UserControl>

@@ -1,0 +1,40 @@
+﻿{
+	Drives:[
+		{
+			Name: "MemDrive",
+			Description: "Ez a memoriába csatlakozó drive.",
+      Provider: "RepoSync.Providers.MemoryProvider",
+      FA_Icon:  "f2db",
+			ProviderArguments:
+			[
+				{ Key: "Path", Value: "/Root"}
+			]
+		},
+		{
+			Name: "SN 7",
+			Description: "Ez a sensenet 7-hez csatlakozó drive.",
+      Provider: "RepoSync.Providers.SnClientLibraryProvider.SnClientLibraryProvider",
+      FA_Icon:  "f0ac",
+			ProviderArguments:
+			[
+				{ Key:"Path", Value: "/Root"},
+				{ Key:"Url", Value: "https://daily.demo.sensenet.com"},
+				{ Key:"Password", Value:"anyámtyukja24"},
+				{ Key:"User", Value:"admin"}
+			]
+		},
+		{
+			Name: "SN 7 b2",
+			Description: "Ez a sensenet 7-hez csatlakozó drive.",
+      Provider: "RepoSync.Providers.SnClientLibraryProvider.SnClientLibraryProvider",
+      FA_Icon:  "f0ac",
+			ProviderArguments:
+			[
+				{ Key:"Path", Value: "/Root"},
+				{ Key:"Url", Value: "https://daily2.demo.sensenet.com"},
+				{ Key:"Password", Value:"anyámtyukja24"},
+				{ Key:"User", Value:"admin"}
+			]
+		}
+	]
+}
