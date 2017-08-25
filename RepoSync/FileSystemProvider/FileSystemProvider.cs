@@ -1,8 +1,6 @@
-﻿using RepoSync;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SenseNet.Client;
 using System.IO;
 using System.Linq;
 using RepoSync.ContentExtensions;
@@ -14,7 +12,7 @@ namespace RepoSync.Providers.FileSystemProvider
     {
         public FileSystemProvider()
         {
-            if(Settings == null)
+            if (Settings == null)
             {
                 Settings = new Dictionary<string, string>();
             }
@@ -53,7 +51,7 @@ namespace RepoSync.Providers.FileSystemProvider
         }
         public async Task<List<string>> ReadPathsAsync()
         {
-            return Files.Select(f=>f.FullName).ToList();
+            return Files.Select(f => f.FullName).ToList();
         }
 
         public async Task<List<SyncContent>> ReadAsync()
@@ -63,7 +61,7 @@ namespace RepoSync.Providers.FileSystemProvider
             foreach (var item in allfiles)
             {
                 var fi = new FileInfo(item);
-               
+
                 //Read .snc
                 string sncText = string.Empty;
                 string Name = fi.Name;
@@ -72,7 +70,7 @@ namespace RepoSync.Providers.FileSystemProvider
                     //Find binary 
                     Name = fi.Name.Substring(fi.Name.Length - sncExtension.Length);
                     var binaryFi = new FileInfo(fi.FullName.Substring(0, fi.FullName.Length - sncExtension.Length));
-                    
+
                     if (binaryFi == null)
                     {
                         //TODO:Content does not have binary
@@ -87,14 +85,14 @@ namespace RepoSync.Providers.FileSystemProvider
                 {
                     //Only binary found, the snc is not found
                     //TODO: Create a content with name of the file
-                    
+
                     //TODO: Set Binary
                 }
-                
+
                 //Create Content object
                 var contentObject = sncText.JSON2Content();
                 //TODO: Set Path
-                string Path = "/" + fi.FullName.Replace(Settings["Path"],"").Replace('\\', '/');
+                string Path = "/" + fi.FullName.Replace(Settings["Path"], "").Replace('\\', '/');
                 if (Path.EndsWith(sncExtension))
                 {
                     Path = Path.Substring(0, Path.Length - sncExtension.Length);
@@ -109,18 +107,18 @@ namespace RepoSync.Providers.FileSystemProvider
         public async Task<List<RepoSyncActionResult>> WriteAsync(List<SyncContent> contents)
         {
             List<RepoSyncActionResult> result = new List<RepoSyncActionResult>();
-            foreach(var content in contents)
+            foreach (var content in contents)
             {
                 try
                 {
                     //Create folders recursively 
                     IOHelpers.CreateInnerFolders(new DirectoryInfo(Settings["Path"]), content.Path);
-                    File.WriteAllText(Settings["Path"] + content.Path.Replace("/",@"\") + ".snc", content.Content2JSON());
-                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = null, Success = true });
+                    File.WriteAllText(Settings["Path"] + content.Path.Replace("/", @"\") + ".snc", content.Content2JSON());
+                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = null });
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = ex, Success = false });
+                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = ex });
                 }
             }
             return result;
