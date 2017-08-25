@@ -1,7 +1,6 @@
-﻿using SenseNet.Client;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using RepoSync.ContentExtensions;
 namespace RepoSync
 {
     /// <summary>
@@ -26,7 +25,7 @@ namespace RepoSync
         /// </summary>
         /// <param name="path">The Repository path</param>
         /// <returns></returns>
-        Task<Content> LoadAsync(string path);
+        Task<SyncContent> LoadAsync(string path);
 
         /// <summary>
         /// Read the filtered paths
@@ -38,13 +37,13 @@ namespace RepoSync
         /// Reads all contents from ReadPaths()
         /// </summary>
         /// <returns></returns>
-        Task<List<Content>> ReadAsync();
+        Task<List<SyncContent>> ReadAsync();
 
         /// <summary>
         /// Writes a list of contents
         /// </summary>
         /// <param name="contents">A list of contents to be written</param>
         /// <returns>The result of writing contents</returns>
-        Task<List<RepoSyncActionResult>> WriteAsync(List<Content> contents);
+        Task<List<RepoSyncActionResult>> WriteAsync(List<SyncContent> contents);
     }
 }

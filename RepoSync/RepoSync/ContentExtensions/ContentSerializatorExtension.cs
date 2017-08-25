@@ -10,6 +10,12 @@ namespace RepoSync.ContentExtensions
 {
     public static class ContentSerializatorExtension
     {
+
+        public static SyncContent Content2SyncContent(this Content c)
+        {
+            return c.Content2JSON().JSON2Content();
+        }
+
         /// <summary>
         /// This method create a json string from SyncContent
         /// </summary>
@@ -26,17 +32,27 @@ namespace RepoSync.ContentExtensions
         /// <returns></returns>
         public static string Content2JSON(this Content c)
         {
-            
+
             var resultContent = new SyncContent();
             var fieldNames = c.GetFieldNames();
-           
+
             foreach (var item in fieldNames)
             {
                 //http://wiki.sensenet.com/Client_library#Reference_fields
                 //TODO: resolve references!
-                resultContent.Fields.Add(item, c[item]);
+
+                var propertyInfo = c.GetType().GetProperty(item);
+                if (propertyInfo != null)
+                {
+                    var value = propertyInfo.GetValue(c, null);
+                    resultContent.Fields.Add(item, value);
+                }
             }
             //TODO: Set Permissions
+            resultContent.Path = c.Path;
+            resultContent.Name = c.Name;
+            resultContent.Id = c.Id;
+
             return resultContent.Content2JSON();
         }
         /// <summary>
@@ -69,16 +85,26 @@ namespace RepoSync.ContentExtensions
         /// </summary>
         /// <param name="c">SenseNet.Client.Content</param>
         /// <returns>String array which contains all fieldname</returns>
-        public static string[] GetFieldNames(this SenseNet.Client.Content c)
+
+        public static string[] GetFieldNames(this Content c)
         {
-            List<string> result = new List<string>();
-            var fields = GetInstanceField(typeof(SenseNet.Client.Content), c, "_fields") as IDictionary<string, object>;
-            dynamic _responseContent = GetInstanceField(typeof(SenseNet.Client.Content), c, "_responseContent") as dynamic;
-            foreach (var item in (_responseContent as JObject))
+            List<string> result = new List<string>()
             {
-                result.Add(item.Key);
-            }
-            result.AddRange(fields.Keys);
+                "Path",
+                "Name",
+                "Id"
+            };
+            var fields = GetInstanceField(typeof(Content), c, "_fields") as IDictionary<string, object>;
+            var responseContent = GetInstanceField(typeof(Content), c, "_responseContent");
+            var jObject = responseContent as JObject;
+            if (jObject != null)
+                foreach (var item in jObject)
+                {
+                    result.Add(item.Key);
+                }
+            if (fields != null)
+                result.AddRange(fields.Keys);
+
             return result.Distinct().ToArray();
         }
 
@@ -93,8 +119,8 @@ namespace RepoSync.ContentExtensions
         /// <returns>The field value from the object.</returns>
         internal static object GetInstanceField(Type type, object instance, string fieldName)
         {
-            BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-                | BindingFlags.Static;
+            BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+
             FieldInfo field = type.GetField(fieldName, bindFlags);
             return field.GetValue(instance);
         }

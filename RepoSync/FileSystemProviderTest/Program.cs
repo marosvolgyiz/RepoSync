@@ -28,9 +28,29 @@ namespace FileSystemProviderTest
             });
             var azraelContent = Content.LoadAsync("/Root/Sites/Azrael");
             azraelContent.Wait();
+
+            //Content conversions
+
             var json = azraelContent.Result.Content2JSON();
             SyncContent sc = json.JSON2Content();
             var translatedJson = sc.Content2JSON();
+            //Use the FileSystem provider
+            RepoSync.Providers.FileSystemProvider.FileSystemProvider fsProvider = new RepoSync.Providers.FileSystemProvider.FileSystemProvider();
+            fsProvider.Settings.Add("Path", @"c:\temp\test");
+
+            //Collect contents
+            List<SyncContent> syncContentList = new List<SyncContent>();
+            syncContentList.Add(sc);
+            var collection = Content.LoadCollectionAsync("/Root/Sites/Azrael");
+            collection.Wait();
+            //Convert SenseNet.Client.Content to SyncContent
+            syncContentList.AddRange(collection.Result.Select(c => c.Content2SyncContent()));
+
+            //Write Contents to the FileSystem
+            fsProvider.WriteAsync(syncContentList).Wait();
+            //Read Contents from the FileSystem
+            var ra = fsProvider.ReadAsync();
+            ra.Wait();
 
         }
     }

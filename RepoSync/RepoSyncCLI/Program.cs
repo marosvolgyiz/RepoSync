@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CommandLine;
-
 
 namespace RepoSync.CLI
 {
@@ -19,8 +19,9 @@ namespace RepoSync.CLI
             var target = ProviderFactory.Create(config.TargetProviderName, config.TargetProviderSettingsDictionary);
 
             var a = new Worker(source, target, ActionType.Compare);
-            a.Run();
-            
+
+            Task.WaitAll(a.Run());
+
             Console.ReadLine();
         }
     }

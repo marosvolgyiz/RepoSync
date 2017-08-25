@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{92FA769A-51F3-4C45-83FD-57DA46431572}</ProjectGuid>
+    <ProjectGuid>{24A1BA26-2C11-4A44-8122-690C3429C258}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ReposSyncWPFApp</RootNamespace>
