@@ -9,7 +9,7 @@
 * Sync contents between SN and Other System
 * Sync contents between SN and SN 
 * Based on Provider Model, we want some built-in providers:
-	* SN provider: connect to the SenseNet ECM with Client Library
+	* SN provider: connect to the sensenet ECM with Client Library
 	* File provider: connect to the FileSystem (or Windows File share) 
 	* Other providers in the future (we won't develop these, maybe in the future … :) but the community maybe develop them ;) ) 
 	* SFTP provider: connect to the FTP or Secure FTP systems 
@@ -28,7 +28,7 @@
 	* SN Task Management Executor Application (In the future, not yet)
 	* WPF desktop application  (In the future, not yet)
 ### RepoSync Library 
-This is a framework which able to Sync SenseNet Contents between SenseNet ECM to Other systems. Contains an interface definition for Provider implementations. It's a modular framework, the users can develop own providers to reach their goals and beat their enemies and gain world domination for fun. 
+This is a framework which able to Sync sensenet Contents between sensenet ECM to Other systems. Contains an interface definition for Provider implementations. It's a modular framework, the users can develop own providers to reach their goals and beat their enemies and gain world domination for fun. 
 
 Fulfill the following requirements: 
 * Use provider models ( IReposyncProvider) 
