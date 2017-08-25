@@ -1,9 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RepoSync.ContentExtensions
 {
     public class SyncContent
     {
+
         public int Id
         {
             get
@@ -85,6 +90,7 @@ namespace RepoSync.ContentExtensions
                 }
             }
         }
+
         public Dictionary<string, object> Fields { get; set; }
         public Dictionary<string, string> Permissions { get; set; }
         public SyncContent()

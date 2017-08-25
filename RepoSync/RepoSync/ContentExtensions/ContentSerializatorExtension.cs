@@ -10,10 +10,12 @@ namespace RepoSync.ContentExtensions
 {
     public static class ContentSerializatorExtension
     {
+
         public static SyncContent Content2SyncContent(this Content c)
         {
             return c.Content2JSON().JSON2Content();
         }
+
         /// <summary>
         /// This method create a json string from SyncContent
         /// </summary>
@@ -38,6 +40,7 @@ namespace RepoSync.ContentExtensions
             {
                 //http://wiki.sensenet.com/Client_library#Reference_fields
                 //TODO: resolve references!
+
                 var propertyInfo = c.GetType().GetProperty(item);
                 if (propertyInfo != null)
                 {
@@ -49,6 +52,7 @@ namespace RepoSync.ContentExtensions
             resultContent.Path = c.Path;
             resultContent.Name = c.Name;
             resultContent.Id = c.Id;
+
             return resultContent.Content2JSON();
         }
         /// <summary>
@@ -81,6 +85,7 @@ namespace RepoSync.ContentExtensions
         /// </summary>
         /// <param name="c">SenseNet.Client.Content</param>
         /// <returns>String array which contains all fieldname</returns>
+
         public static string[] GetFieldNames(this Content c)
         {
             List<string> result = new List<string>()
@@ -114,8 +119,8 @@ namespace RepoSync.ContentExtensions
         /// <returns>The field value from the object.</returns>
         internal static object GetInstanceField(Type type, object instance, string fieldName)
         {
-            BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-                                     | BindingFlags.Static;
+            BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+
             FieldInfo field = type.GetField(fieldName, bindFlags);
             return field.GetValue(instance);
         }

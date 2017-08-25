@@ -6,6 +6,7 @@ using System.Linq;
 using RepoSync.ContentExtensions;
 using RepoSync.Providers.FileSystemProvider.Helpers;
 
+
 namespace RepoSync.Providers.FileSystemProvider
 {
     public class FileSystemProvider : IRepoSyncProvider
@@ -35,6 +36,7 @@ namespace RepoSync.Providers.FileSystemProvider
                 return _files;
             }
         }
+
         public async Task<SyncContent> LoadAsync(string path)
         {
             throw new NotImplementedException();
@@ -56,7 +58,9 @@ namespace RepoSync.Providers.FileSystemProvider
 
         public async Task<List<SyncContent>> ReadAsync()
         {
+
             List<SyncContent> contents = new List<SyncContent>();
+
             List<string> allfiles = await ReadPathsAsync();
             foreach (var item in allfiles)
             {
@@ -100,6 +104,7 @@ namespace RepoSync.Providers.FileSystemProvider
                 contentObject.Path = Path;
                 contentObject.Name = Name;
                 contents.Add(contentObject);
+
             }
             return contents;
         }
