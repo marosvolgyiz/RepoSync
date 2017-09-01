@@ -1,5 +1,4 @@
-﻿using RepoSync;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
@@ -13,7 +12,7 @@ namespace RepoSync.Providers.FileSystemProvider
     {
         public FileSystemProvider()
         {
-            if(Settings == null)
+            if (Settings == null)
             {
                 Settings = new Dictionary<string, string>();
             }
@@ -82,7 +81,9 @@ namespace RepoSync.Providers.FileSystemProvider
 
         public async Task<List<SyncContent>> ReadAsync()
         {
+
             List<SyncContent> contents = new List<SyncContent>();
+
             List<string> allfiles = await ReadPathsAsync();
             foreach (var item in allfiles)
             {
@@ -114,7 +115,7 @@ namespace RepoSync.Providers.FileSystemProvider
                     
                     //TODO: Set Binary
                 }
-
+                
                 //TODO: Set Path
                 string Path = "/" + fi.FullName.Replace(Settings["Path"], "").Replace('\\', '/');
                 //Create Content object
@@ -140,10 +141,11 @@ namespace RepoSync.Providers.FileSystemProvider
                 {
                   
                    
-                    contentObject.Path = Path;
-                    contentObject.Name = Name;
-                    contents.Add(contentObject);
-                }
+                contentObject.Path = Path;
+                contentObject.Name = Name;
+                contents.Add(contentObject);
+
+            }
                 catch(Exception ex)
                 {
 
@@ -157,18 +159,18 @@ namespace RepoSync.Providers.FileSystemProvider
         public async Task<List<RepoSyncActionResult>> WriteAsync(List<SyncContent> contents)
         {
             List<RepoSyncActionResult> result = new List<RepoSyncActionResult>();
-            foreach(var content in contents)
+            foreach (var content in contents)
             {
                 try
                 {
                     //Create folders recursively 
                     IOHelpers.CreateInnerFolders(new DirectoryInfo(Settings["Path"]), content.Path);
-                    File.WriteAllText(Settings["Path"] + content.Path.Replace("/",@"\") + ".snc", content.Content2JSON());
-                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = null, Success = true });
+                    File.WriteAllText(Settings["Path"] + content.Path.Replace("/", @"\") + ".snc", content.Content2JSON());
+                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = null });
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = ex, Success = false });
+                    result.Add(new RepoSyncActionResult() { ContentResult = content, SourceContent = content, FaultReason = ex });
                 }
             }
             return result;
