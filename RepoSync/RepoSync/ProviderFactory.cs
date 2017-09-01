@@ -20,7 +20,17 @@ namespace RepoSync
         public static IRepoSyncProvider Create(string providerName, Dictionary<string, string> settings)
         {
             if (AppDomain.CurrentDomain.GetAssemblies().All(a => a.GetName().Name != providerName))
-                Assembly.Load(providerName);
+            {
+                try
+                {
+                    Assembly.Load(providerName);
+
+                }
+                catch (Exception ex)
+                 {
+                    throw new Exception("Can't load assembly: ", ex);
+                }
+            }
 
             var providerType = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes()).Single(t =>

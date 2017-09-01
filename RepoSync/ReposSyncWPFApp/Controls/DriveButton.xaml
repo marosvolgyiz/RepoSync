@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RepoSync.WPFApp.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="64" Cursor="Hand" d:DesignWidth="200" Padding="5,3,5,3" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" BorderThickness="1" BorderBrush="Transparent">
-    <Grid>
+
+             d:DesignHeight="48" Cursor="Hand" d:DesignWidth="200" Padding="5,3,5,3" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" BorderThickness="1" BorderBrush="Transparent">
+    <Grid Margin="0,0,20,4">
+
        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
@@ -28,20 +30,26 @@
             </Ellipse.Fill>
 
         </Ellipse>
-        <TextBlock  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="tbFontAwesome" Text="&#xf2db;" FontFamily="{StaticResource FontAwesome}" Foreground="#6C7A89" FontSize="26" Margin="10" VerticalAlignment="Center">
+
+        <TextBlock  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="tbFontAwesome" Text="&#xf2db;" FontFamily="{StaticResource FontAwesome}" Foreground="#6C7A89" FontSize="20" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+
             <!--<TextBlock.BitmapEffect>
                 <DropShadowBitmapEffect ShadowDepth=".2" Softness=".04" Color="Gray">
                 </DropShadowBitmapEffect>
             </TextBlock.BitmapEffect>-->
         </TextBlock>
-        <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="DriveCaption" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16">
+
+        <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5 1 1 1" Name="DriveCaption" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="12">
+
             <!--<Label.BitmapEffect>
                 <DropShadowBitmapEffect ShadowDepth=".2" Softness=".04" Color="Gray">
                 </DropShadowBitmapEffect>
             </Label.BitmapEffect>-->
             Mem Drive
         </Label>
-        <Label  Grid.Row="1" Grid.Column="2" Name="StatusLabel"  VerticalContentAlignment="Top" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Foreground="#D91E18" FontSize="12" FontFamily="Courier New" Grid.ColumnSpan="2">
+
+        <Label  Grid.Row="1" Grid.Column="2" Name="StatusLabel"  VerticalContentAlignment="Top" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Foreground="#D91E18" FontSize="10" Padding="5 1 1 1" FontFamily="Courier New" Grid.ColumnSpan="2">
+
             <!--<Label.BitmapEffect>
                 <DropShadowBitmapEffect  ShadowDepth=".2" Softness=".04" Color="Gray">
                 </DropShadowBitmapEffect>
