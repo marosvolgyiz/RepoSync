@@ -8,6 +8,7 @@ namespace RepoSync.WPFApp.Code.Settings
 {
     public class RepoSyncDrive
     {
+
         public RepoSyncDrive()
         {
             if (ProviderArguments == null)
@@ -15,11 +16,15 @@ namespace RepoSync.WPFApp.Code.Settings
                 ProviderArguments = new Dictionary<string, string> ();
             }
         }
+
         public string Name { get; set; }
         public string Description { get; set; }
         public string Provider { get; set; }
         public string FA_Icon { get; set; }
-        public Dictionary<string,string> ProviderArguments { get; set; }
+
+
+        public List<KeyValuePair<string,string>> ProviderArguments { get; set; }
+
         public override string ToString()
         {
             return this.Name;

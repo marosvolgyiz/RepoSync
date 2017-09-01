@@ -46,6 +46,7 @@ namespace RepoSync.WPFApp.Code
             }
         }
 
+
         public void SaveSetting()
         {
             string jsonSetting = JsonConvert.SerializeObject(this);

@@ -101,7 +101,9 @@
     <Compile Include="Controls\DriveButton.xaml.cs">
       <DependentUpon>DriveButton.xaml</DependentUpon>
     </Compile>
+
     <Compile Include="Controls\SyncContentBasedTreeViewItem.cs" />
+
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -159,10 +161,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+
     <ProjectReference Include="..\FileSystemProvider\FileSystemProvider.csproj">
       <Project>{38aabae9-befb-4ee8-a002-48af77cd78ac}</Project>
       <Name>FileSystemProvider</Name>
     </ProjectReference>
+
     <ProjectReference Include="..\RepoSync\RepoSync.csproj">
       <Project>{aa5d6afd-b129-4b59-92bf-2bd1082430ea}</Project>
       <Name>RepoSync</Name>
