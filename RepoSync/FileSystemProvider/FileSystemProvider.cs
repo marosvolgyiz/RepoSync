@@ -2,12 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SenseNet.Client;
 using System.IO;
 using System.Linq;
 using RepoSync.ContentExtensions;
 using RepoSync.Providers.FileSystemProvider.Helpers;
-
+using SenseNet.Client;
 namespace RepoSync.Providers.FileSystemProvider
 {
     public class FileSystemProvider : IRepoSyncProvider
@@ -20,7 +19,7 @@ namespace RepoSync.Providers.FileSystemProvider
             }
         }
         public const string sncExtension = ".snc";
-        public List<string> RequiredSettings => new List<string> { "Path" };
+        public List<string> RequiredSettings => new List<string> { "Path" ,"AllDirectories"};
         public Dictionary<string, string> Settings { get; set; }
         public IRepoSyncFilter Filter { get; set; }
         private FileInfo[] _files = null;
@@ -32,9 +31,29 @@ namespace RepoSync.Providers.FileSystemProvider
                 if (_files == null)
                 {
                     var di = new DirectoryInfo(Settings["Path"]);
-                    _files = di.GetFiles("*.*", SearchOption.AllDirectories);
+                    var allDirectories = Settings["AllDirectories"].ToLower().Trim() == "true";
+                    
+                    _files = di.GetFiles("*.*", allDirectories? SearchOption.AllDirectories: SearchOption.TopDirectoryOnly);
+
                 }
                 return _files;
+            }
+        }
+        private DirectoryInfo[] _Directories = null;
+        public DirectoryInfo[] Directories
+        {
+            get
+            {
+                CheckRequireSetting();
+                if (_Directories == null)
+                {
+                    var di = new DirectoryInfo(Settings["Path"]);
+                    var allDirectories = Settings["AllDirectories"].ToLower().Trim() == "true";
+
+                    _Directories = di.GetDirectories("*.*", allDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+
+                }
+                return _Directories;
             }
         }
         public async Task<SyncContent> LoadAsync(string path)
@@ -53,7 +72,12 @@ namespace RepoSync.Providers.FileSystemProvider
         }
         public async Task<List<string>> ReadPathsAsync()
         {
-            return Files.Select(f=>f.FullName).ToList();
+            var resultList = new List<string>();
+            //Directories
+            resultList.AddRange(Directories.Select(f => f.FullName).ToList());
+            //Files
+            resultList.AddRange(Files.Select(f => f.FullName).ToList());
+            return resultList;
         }
 
         public async Task<List<SyncContent>> ReadAsync()
@@ -90,18 +114,42 @@ namespace RepoSync.Providers.FileSystemProvider
                     
                     //TODO: Set Binary
                 }
-                
+
+                //TODO: Set Path
+                string Path = "/" + fi.FullName.Replace(Settings["Path"], "").Replace('\\', '/');
                 //Create Content object
                 var contentObject = sncText.JSON2Content();
-                //TODO: Set Path
-                string Path = "/" + fi.FullName.Replace(Settings["Path"],"").Replace('\\', '/');
+                if (contentObject == null)
+                {
+                    contentObject = new SyncContent();
+                    if (System.IO.File.Exists(Path))
+                    {
+                        contentObject.Fields.Add("ContentType", "File");
+                    }
+                    else
+                    {
+                        contentObject.Fields.Add("ContentType", "Folder");
+                    }
+                }
+              
                 if (Path.EndsWith(sncExtension))
                 {
                     Path = Path.Substring(0, Path.Length - sncExtension.Length);
                 }
-                contentObject.Path = Path;
-                contentObject.Name = Name;
-                contents.Add(contentObject);
+                try
+                {
+                  
+                   
+                    contentObject.Path = Path;
+                    contentObject.Name = Name;
+                    contents.Add(contentObject);
+                }
+                catch(Exception ex)
+                {
+
+                }
+             
+
             }
             return contents;
         }

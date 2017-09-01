@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RepoSync.WPFApp"
+    
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="RepoSync.WPFApp.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="768" Width="1024" WindowState="Maximized">
@@ -20,25 +21,13 @@
                                 <ColumnDefinition Width="25*" />
                                 <ColumnDefinition Width="25*" />
                             </Grid.ColumnDefinitions>
-                            <Button Margin="2" Padding="2" Grid.Column="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="F5 Copy"/>
-                            <Button Margin="2" Padding="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="F3 Compare"/>
+                            <Button Margin="2" Padding="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="F3 Compare"/>
+                            <Button Margin="2" Padding="2" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="F5 Copy"/>
                             <Button Margin="2" Padding="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="F6 Sync (LTR)"/>
                             <Button Margin="2" Padding="2" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="F7 Sync (RTL)"/>
                         </Grid>
 
-                        <Grid Height="64" DockPanel.Dock="Top" Margin="0,0,0,2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="5" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel DockPanel.Dock="Left" Name="LeftButtonStripPanel" VerticalAlignment="Stretch" Grid.Column="0"  Orientation="Horizontal">
-
-                            </StackPanel>
-                            <StackPanel DockPanel.Dock="Right"  Name="RightButtonStripPanel"  VerticalAlignment="Stretch" Grid.Column="2" Orientation="Horizontal">
-
-                            </StackPanel>
-                        </Grid>
+                        
                         <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -46,13 +35,19 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <DockPanel Grid.Column="0" HorizontalAlignment="Stretch" LastChildFill="True">
+                                <WrapPanel DockPanel.Dock="Top" Name="LeftButtonStripPanel" HorizontalAlignment="Stretch"  Grid.Column="0"  Orientation="Horizontal">
+
+                                </WrapPanel>
                                 <ComboBox  Height="20" VerticalAlignment="Top" Text="körte" DockPanel.Dock="Top" />
-                                <TreeView x:Name="treeView"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
+                                <TreeView x:Name="LeftTreeView"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
                             </DockPanel>
                             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
                             <DockPanel Grid.Column="2" HorizontalAlignment="Stretch" LastChildFill="True">
+                                <WrapPanel DockPanel.Dock="Top" Name="RightButtonStripPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Orientation="Horizontal">
+
+                                </WrapPanel>
                                 <ComboBox  Height="20" VerticalAlignment="Top" Text="alma" DockPanel.Dock="Top"/>
-                                <TreeView x:Name="treeView2"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
+                                <TreeView x:Name="RightTreeView"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
                             </DockPanel>
 
                         </Grid>
