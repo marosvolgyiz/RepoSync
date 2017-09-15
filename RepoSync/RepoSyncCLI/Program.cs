@@ -18,7 +18,7 @@ namespace RepoSync.CLI
             var source = ProviderFactory.Create(config.SourceProviderName, config.SourceProviderSettingsDictionary);
             var target = ProviderFactory.Create(config.TargetProviderName, config.TargetProviderSettingsDictionary);
 
-            var a = new Worker(source, target, ActionType.Compare);
+            var a = new Worker(source, target, ActionType.Sync);
 
             Task.WaitAll(a.Run());
 

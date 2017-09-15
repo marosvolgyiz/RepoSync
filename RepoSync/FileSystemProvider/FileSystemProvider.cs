@@ -95,7 +95,7 @@ namespace RepoSync.Providers.FileSystemProvider
                 if (fi.FullName.EndsWith(sncExtension))
                 {
                     //Find binary 
-                    Name = fi.Name.Substring(fi.Name.Length - sncExtension.Length);
+                    Name = fi.Name.Substring(0, fi.Name.Length - sncExtension.Length);
                     var binaryFi = new FileInfo(fi.FullName.Substring(0, fi.FullName.Length - sncExtension.Length));
                     
                     if (binaryFi == null)
@@ -115,11 +115,14 @@ namespace RepoSync.Providers.FileSystemProvider
                     
                     //TODO: Set Binary
                 }
-                
+
                 //TODO: Set Path
-                string Path = "/" + fi.FullName.Replace(Settings["Path"], "").Replace('\\', '/');
+                //string Path = "/" + fi.FullName.Replace(Settings["Path"], "").Replace('\\', '/');
+                string Path = fi.FullName.Replace(Settings["Path"].Replace("\\\\", "\\"), "").Replace('\\', '/');
+
                 //Create Content object
-                var contentObject = sncText.JSON2Content();
+                var contentObject = sncText?.JSON2Content();
+
                 if (contentObject == null)
                 {
                     contentObject = new SyncContent();
